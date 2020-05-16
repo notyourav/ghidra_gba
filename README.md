@@ -24,3 +24,7 @@ You can export a header file from Ghidra in the Data Type Manager window -> Righ
 Take a look at example_csv.csv and example_header.h if you are unsure if you exported the right format.
 
 Your .SYM file must have the same name as the loaded rom and must be in the same directory if you want to use it with No$Gba.
+
+## Todo
+Bitfields do not import properly
+Probably other bugs
