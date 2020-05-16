@@ -17,7 +17,7 @@ HEADER = args.header
 ASCII = {"char"}
 BYTE = {"byte", "undefined", "undefined1"}
 HWORD = {"ushort", "short", "undefined2"}
-WORD = {"uint", "int", "undefined4", "pointer"}
+WORD = {"uint", "int", "undefined4", "pointer", "unsigned int"}
 OTHER = {"void", "", "Data Type"}
 file = open(INPUT)
 csv = csv.reader(file)
@@ -163,7 +163,7 @@ def resolve(_data, _addr, offset, name):
 
             # only will write lone base units
             write_base_unit(hex(int(_addr, 16) + offset)[2:].zfill(8), p["type"])
-            sym.write(hex(int(_addr, 16) + offset)[2:].zfill(8) + " " + name + "->" + p["type"] + "\n")
+            sym.write(hex(int(_addr, 16) + offset)[2:].zfill(8) + " " + name + "->" + p["name"] + "\n")
 
             if p["type"] in ASCII:
                 offset = offset + 0x1
@@ -177,7 +177,7 @@ def resolve(_data, _addr, offset, name):
             elif _t := is_array(p["type"]):
 
                 #this will write array if it is a base unit
-                write_base_unit_array(hex(int(_addr, 16) + offset)[2:].zfill(8), p["type"])
+                write_base_unit_array(hex(int(_addr, 16) + offset)[2:].zfill(8), p["name"])
 
                 # use convert_and_pad here to find the array len
                 if _t is BYTE or _t is ASCII:
