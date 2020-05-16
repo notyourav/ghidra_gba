@@ -151,6 +151,17 @@ def csv_convert():
         write_base_unit(addr, data)
 
 def resolve(_data, _addr, offset, name):
+
+    # user defined data type arrays
+    if "[" in _data:
+        arr = _data.split("[")[0]
+        l = int(convert_and_pad(_data, 1), 16)
+        if arr in cppHeader.classes:
+            for i in range(l):
+                offset = resolve(arr,_addr, offset, name + "[%i]"%i)
+
+            
+        
     if _data in cppHeader.classes:
 
         sym.write(hex(int(_addr, 16) + offset)[2:].zfill(8) + " " + name + "\n")
@@ -158,6 +169,9 @@ def resolve(_data, _addr, offset, name):
         #c (class) can be a struct or enum
         c = cppHeader.classes[_data]["properties"]["public"]
 
+        # do arrays of user defined data types
+
+        
         #go over every property, if it's not a base unit then resolve it further
         for p in c:
 
@@ -186,9 +200,9 @@ def resolve(_data, _addr, offset, name):
                     offset = offset + convert_and_pad(p["type"], 2)
                 if _t is WORD:
                     offset = offset + convert_and_pad(p["type"], 4)
-                
             else:
-                print("resolving", _data, "->", p["type"], "current offset", offset)
+                                                        
+                #print("resolving", _data, "->", p["type"], "current offset", offset)
 
                 # data (struct) -> p (another struct)
                 # example linkObj->inventory
