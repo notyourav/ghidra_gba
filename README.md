@@ -27,4 +27,5 @@ Your .SYM file must have the same name as the loaded rom and must be in the same
 
 ## Todo
 Bitfields do not import properly
+
 Probably other bugs
